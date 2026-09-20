@@ -1,5 +1,5 @@
 # 🐚 Abalone Age Prediction using Machine Learning
-### نظام ذكي للتنبؤ بعمر محار أذن البحر (Abalone) باستخدام خوارزميات تعلم الآلة وتطبيق Flask
+### An End-to-End Machine Learning Pipeline & Interactive Flask Web Application for Non-Destructive Abalone Age Estimation
 
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-Web%20App-green.svg?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
@@ -17,43 +17,46 @@
 
 ---
 
-## 📌 نبذة عامة عن المشروع (Project Overview)
+## 📌 Project Overview
 
-يعتبر محار **أذن البحر (Abalone)** من الرخويات البحرية ذات القيمة الاقتصادية والغذائية العالية. تحديد عمر الأبالوني بشكل تقليدي يتطلب عملية معقدة ومجهدة تعتمد على:
-1. تقطيع القوقعة المخروطية.
-2. صبغ العينات وتثبيتها.
-3. فحص الحلقات (Rings) عبر المجهر وعدها بدقة (كل حلقة تُمثّل عادة سنة نمو، ويُضاف إليها 1.5 لحساب العمر الفعلي بالسنوات).
+**Abalone** is a marine gastropod mollusk with significant economic and culinary value worldwide. Determining the age of an abalone is crucial for harvesting regulation, marine biology research, and aquaculture resource management.
 
-> **الهدف من هذا المشروع:**
-> بناء نموذج تعلم آلة (Machine Learning) قادر على **التنبؤ التلقائي وغير الإتلافي** بعمر الأبالوني فوراً بالاعتماد على القياسات الفيزيائية والحيوية المتاحة (كالأبعاد والأوزان المختلفة)، وتوفير **واجهة مستخدم ويب تفاعلية عبر Flask** لإتاحة إجراء التوقعات بكل سهولة.
+Traditionally, determining an abalone's age requires a tedious, destructive, and labor-intensive laboratory process:
+1. The shell must be carefully cut through the cone.
+2. The section is stained and polished.
+3. The growth rings (*rings*) are manually counted under a microscope (each ring represents roughly one year of growth, with the actual age calculated as `Age = Rings + 1.5`).
+
+> **Project Mission:**
+> Build an automated, non-destructive **Machine Learning** regression system capable of accurately predicting an abalone's age from easily measurable physical and morphological characteristics (such as dimensions and weights), integrated into an interactive **Flask Web Application** for instant real-time predictions.
 
 ---
 
-## ✨ المميزات الرئيسية (Key Features)
+## ✨ Key Features
 
-- 📊 **تحليل استكشافي شامل للبيانات (EDA):** دراسة العلاقات والارتباطات (Correlation Matrix)، الرسوم البيانية للقيم المكررة، والمدرجات التكرارية (Histograms).
-- 🔄 **معالجة مسبقة ذكية (Data Preprocessing):**
-  - تشفير المتغيرات الفئوية (Categorical Encoding) لجنس المحار (`M: 0`, `F: 1`, `I: 2`).
-  - معالجة البيانات القياسية واختبار التوحيد المعياري (StandardScaler).
-- 🚀 **مقارنة وتدريب نماذج متعددة (Multi-Model Benchmarking):**
-  - **Decision Tree Regressor (DTR)**
+- 📊 **Exploratory Data Analysis (EDA):** In-depth distribution analysis, correlation matrix heatmaps, duplicate checks, and feature relationships.
+- 🔄 **Feature Engineering & Preprocessing:**
+  - Categorical encoding for the `Sex` attribute (`M: 0`, `F: 1`, `I: 2`).
+  - Feature scaling analysis using `StandardScaler`.
+  - Balanced 67% / 33% Train-Test split.
+- 🚀 **Multi-Model Benchmarking:** Comparison of state-of-the-art regression algorithms:
+  - **Decision Tree Regressor (DTR)** (Exported production model)
   - **Random Forest Regressor**
   - **Gradient Boosting Regressor**
   - **XGBoost Regressor**
   - **CatBoost Regressor**
   - **LightGBM Regressor**
-- 📏 **تقييم أداء فائق:** قياس الأداء باستخدام مؤشرات الانحدار الدقيقة:
-  - $R^2$ Score (معدل التحديد)
-  - MAE (متوسط الخطأ المطلق)
-  - MSE (متوسط مربع الخطأ)
-  - MdSE (وسيط الخطأ المطلق)
-- 🌐 **تطبيق ويب تفاعلي (Interactive Web Application):**
-  - واجهة مستخدم مبنية بـ HTML/CSS باللغة العربية مع دعم كامل للاتجاه من اليمين لليسار (RTL).
-  - خادم Flask سريع الاستجابة لتمرير المدخلات للنموذج واستعراض النتيجة لحظياً.
+- 📏 **Comprehensive Evaluation Metrics:**
+  - $R^2$ Score (Coefficient of Determination)
+  - MAE (Mean Absolute Error)
+  - MSE (Mean Squared Error)
+  - MdSE (Median Absolute Error)
+- 🌐 **Interactive Flask Web Application:**
+  - Responsive, clean user interface with input validation.
+  - Real-time model inference and immediate age display.
 
 ---
 
-## 🏗️ البنية المعمارية للمشروع (Workflow Architecture)
+## 🏗️ Workflow Architecture
 
 ```mermaid
 graph TD
@@ -62,14 +65,14 @@ graph TD
     C --> D[Train/Test Split 67% / 33%]
     D --> E[Feature Scaling StandardScaler]
     
-    subgraph Model Evaluation & Selection
+    subgraph Multi-Model Training & Evaluation
         E --> M1[DecisionTreeRegressor]
         E --> M2[RandomForestRegressor]
         E --> M3[GradientBoostingRegressor]
         E --> M4[XGBRegressor]
         E --> M5[CatBoostRegressor]
         E --> M6[LGBMRegressor]
-        M1 --> EV[Evaluation: R2, MAE, MSE, MdSE]
+        M1 --> EV[Metrics: R2, MAE, MSE, MdSE]
         M2 --> EV
         M3 --> EV
         M4 --> EV
@@ -77,132 +80,132 @@ graph TD
         M6 --> EV
     end
     
-    EV --> F[Export Best Model: dtr.pkl]
-    F --> G[Flask Web Application - app.py]
-    G --> H[Web UI - index.html]
+    EV --> F[Model Persistence: dtr.pkl]
+    F --> G[Flask Backend: app.py]
+    G --> H[Interactive UI: index.html]
     H --> I[Instant Age Prediction Output]
 ```
 
 ---
 
-## 📋 تفاصيل مجموعة البيانات (Dataset Schema)
+## 📋 Dataset Description
 
-تحتوي مجموعة البيانات على **4,177** عينة لخصائص محار أذن البحر، وتتكون من 8 متغيرات إدخال (Features) بالإضافة للمتغير الهدف (Target):
+The dataset comprises **4,177** instances with **8 continuous/nominal features** and **1 integer target variable**:
 
-| المتغير (Feature) | الوصف (Description) | وحدة القياس | نوع البيانات |
+| Feature Name | Description | Unit | Data Type |
 | :--- | :--- | :--- | :--- |
-| **Sex** | جنس المحار (ذكر `M=0`، أنثى `F=1`، يافع `I=2`) | تصنيف | فئوي (Nominal) |
-| **Length** | أطول قياس للقوقعة | mm (مليمتر) | مستمر (Continuous) |
-| **Diameter** | القطر العمودي على الطول | mm (مليمتر) | مستمر (Continuous) |
-| **Height** | ارتفاع القوقعة مع اللحم داخلها | mm (مليمتر) | مستمر (Continuous) |
-| **Whole weight** | الوزن الكلي للمحارة | Grams (جرام) | مستمر (Continuous) |
-| **Shucked weight** | وزن لحم المحار الصافي | Grams (جرام) | مستمر (Continuous) |
-| **Viscera weight** | وزن الأحشاء (بعد التصفية) | Grams (جرام) | مستمر (Continuous) |
-| **Shell weight** | وزن القوقعة الجافة | Grams (جرام) | مستمر (Continuous) |
-| **Rings (Target)** | عدد الحلقات (العمر الفعلي = Rings + 1.5) | عدد صحيح | رقمي (Integer) |
+| **Sex** | Gender of the abalone (`M = 0`, `F = 1`, `I = 2` for Infant) | Category | Nominal |
+| **Length** | Longest shell measurement | mm | Continuous |
+| **Diameter** | Measurement perpendicular to length | mm | Continuous |
+| **Height** | Shell height with meat inside | mm | Continuous |
+| **Whole weight** | Total weight of the whole abalone | Grams | Continuous |
+| **Shucked weight** | Weight of meat only | Grams | Continuous |
+| **Viscera weight** | Gut weight (after bleeding) | Grams | Continuous |
+| **Shell weight** | Weight of the dry shell | Grams | Continuous |
+| **Rings (Target)** | Count of shell rings (`Actual Age = Rings + 1.5`) | Count | Integer |
 
 ---
 
-## 🧪 مقارنة أداء النماذج (Model Evaluation)
+## 🧪 Model Comparison & Evaluation
 
-تم تدريب واختبار عدة خوارزميات رائدة في تعلم الآلة، وأظهرت النتائج قدرة نماذج التفرع والتعزيز التدرجي على التقاط العلاقات غير الخطية بين الخواص المورفولوجية وعدد الحلقات:
+Six leading regression algorithms were evaluated to capture both linear and non-linear patterns in morphological growth:
 
-| النموذج (Model) | نوع الخوارزمية | نقاط القوة |
+| Model | Algorithm Family | Key Advantage |
 | :--- | :--- | :--- |
-| **CatBoost Regressor** | Gradient Boosting on Decision Trees | أداء قوي ومقاومة عالية للتجاوز (Overfitting) |
-| **XGBoost Regressor** | Extreme Gradient Boosting | سرعة حسابية ودقة عالية في الانحدار |
-| **LightGBM Regressor** | Leaf-wise Tree Boosting | كفاءة فائقة وسرعة معالجة عالية |
-| **Random Forest** | Ensemble Bagging | استقرار وتعميم عالي عبر متوسط الأشجار |
-| **Gradient Boosting** | Sequential Boosting | تقليل متتابع للخطأ المتبقي |
-| **Decision Tree Regressor** | Tree-based Regression | بساطة، خفة، وقابلية عالية للتفسير المباشر |
+| **CatBoost Regressor** | Symmetric Tree Gradient Boosting | Robust against overfitting with categorical resilience |
+| **XGBoost Regressor** | Regularized Gradient Boosting | High computational efficiency and regression accuracy |
+| **LightGBM Regressor** | Leaf-wise Gradient Boosting | Ultra-fast execution and scalability |
+| **Random Forest Regressor** | Ensemble Bagging | Strong generalization variance reduction |
+| **Gradient Boosting Regressor** | Sequential Gradient Boosting | Continuous residual minimization |
+| **Decision Tree Regressor** | Tree-based Partitioning | Fast, interpretable, lightweight deployment (`dtr.pkl`) |
 
 ---
 
-## 📁 هيكل المشروع (Project Directory Structure)
+## 📁 Project Structure
 
 ```plaintext
-├── Abalone_Age_Prediction_Machine_Learning.ipynb   # دفتر Jupyter يغطي الـ EDA والتدريب
-├── abalone.csv                                     # مجموعة البيانات المستخدمة
-├── app.py                                          # تطبيق خادم Flask الرئيسي
-├── index.html                                      # واجهة المستخدم الأمامية (HTML/CSS)
-├── dtr.pkl                                         # النموذج المدرّب والمحفوظ (Pickle)
-├── img.jpg                                         # صورة توضيحية لقوقعة أذن البحر
-├── requirements.txt                                # قائمة المكتبات والتبعيات المطلوبة
-├── .gitignore                                      # الملفات المستثناة من مستودع Git
-└── README.md                                       # التوثيق الشامل للمشروع
+├── Abalone_Age_Prediction_Machine_Learning.ipynb   # Complete Jupyter Notebook (EDA & Modeling)
+├── abalone.csv                                     # Clean dataset with 4,177 records
+├── app.py                                          # Flask web server backend
+├── index.html                                      # Frontend user interface
+├── dtr.pkl                                         # Serialized pre-trained ML model
+├── img.jpg                                         # Visual asset representing Abalone
+├── requirements.txt                                # Python package dependencies
+├── .gitignore                                      # Ignored build, cache, and env files
+├── LICENSE                                         # MIT Open Source License
+└── README.md                                       # Comprehensive project documentation
 ```
 
 ---
 
-## ⚙️ طريقة التثبيت والتشغيل محلياً (Installation & Setup)
+## ⚙️ Installation & Getting Started
 
-### 1. استنساخ المستودع (Clone Repository)
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/M0saeed/Abalone-Age-Prediction-Machine-Learning.git
 cd Abalone-Age-Prediction-Machine-Learning
 ```
 
-### 2. إنشاء بيئة افتراضية وتفعيلها (Virtual Environment)
+### 2. Create and Activate a Virtual Environment
 ```bash
-# إنشاء البيئة الافتراضية
+# On Windows
 python -m venv venv
-
-# تفعيل البيئة الافتراضية (Windows)
 venv\Scripts\activate
 
-# تفعيل البيئة الافتراضية (Linux / macOS)
+# On macOS / Linux
+python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. تثبيت المتطلبات (Install Dependencies)
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. تشغيل تطبيق Flask
+### 4. Run the Web Application
 ```bash
 python app.py
 ```
-بعد تشغيل الأمر، افتح متصفحك وتوجه إلى:
+Open your browser and navigate to:
 ```
 http://127.0.0.1:5000/
 ```
 
-### 5. تشغيل دفتر الملاحظات (Jupyter Notebook)
-لرؤية التحليلات والرسوم البيانية وتدريب النماذج:
+### 5. Explore the Jupyter Notebook
+To view the data exploration, correlation matrices, and model benchmarks:
 ```bash
 jupyter notebook Abalone_Age_Prediction_Machine_Learning.ipynb
 ```
 
 ---
 
-## 💻 الاستخدام البرمجي (Programmatic API Usage)
+## 💻 Programmatic Usage (Python API)
 
-يمكنك استدعاء النموذج المحفوظ واستخدامه داخل أي كود Python كما يلي:
+You can easily integrate and run inference with the saved model in any Python environment:
 
 ```python
 import pickle
 import numpy as np
 
-# تحميل النموذج
+# 1. Load the trained Decision Tree model
 with open('dtr.pkl', 'rb') as f:
     model = pickle.load(f)
 
-# عينة مدخلات: [Sex, Length, Diameter, Height, Whole_weight, Shucked_weight, Viscera_weight, Shell_weight]
-# Sex: 0=Male, 1=Female, 2=Infant
-sample_features = np.array([[2, 0.33, 0.255, 0.08, 0.205, 0.0895, 0.0395, 0.055]])
+# 2. Input features format:
+# [Sex (0=M, 1=F, 2=I), Length, Diameter, Height, Whole_weight, Shucked_weight, Viscera_weight, Shell_weight]
+sample_input = np.array([[2, 0.33, 0.255, 0.08, 0.205, 0.0895, 0.0395, 0.055]])
 
-# توقع عدد الحلقات
-predicted_rings = model.predict(sample_features)[0]
+# 3. Predict number of rings
+predicted_rings = model.predict(sample_input)[0]
 estimated_age = predicted_rings + 1.5
 
-print(f"Predicted Rings: {predicted_rings:.2f}")
-print(f"Estimated Age: {estimated_age:.2f} years")
+print(f"Predicted Rings : {predicted_rings:.2f}")
+print(f"Estimated Age   : {estimated_age:.2f} years")
 ```
 
 ---
 
-## 👨‍💻 المطور (Author)
+## 👨‍💻 Author
 
 - **Mohamed Saeed**
 - **GitHub:** [@M0saeed](https://github.com/M0saeed)
@@ -210,6 +213,6 @@ print(f"Estimated Age: {estimated_age:.2f} years")
 
 ---
 
-## 📄 الترخيص (License)
+## 📄 License
 
-هذا المشروع متاح تحت ترخيص **MIT License** - راجع ملف [LICENSE](LICENSE) لمزيد من التفاصيل.
+This project is open-source and licensed under the [MIT License](LICENSE).
